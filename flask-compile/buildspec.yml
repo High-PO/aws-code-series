@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+  pre_build:
+    commands:
+      - |
+        if [ -f dockerfile ] || [ -f Dockerfile ]; then
+          aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <accessid>.dkr.ecr.<region>.amazonaws.com
+        fi
+      - echo " End Pre Build "
+  build:
+    commands:
+      - |
+        if [ -f dockerfile ] || [ -f Dockerfile ]; then
+          docker build -t <ecr_name> .
+          docker tag <ecr_name>:latest <accessid>.dkr.ecr.<region>.amazonaws.com/<ecr_name>:latest
+        fi
+      - python -m py_compile app.py
+      - echo " End build "
+  post_build:
+    commands:
+      - |
+        if [ -f dockerfile] || [ -f Dockerfile ]; then
+          docker push <accessid>.dkr.ecr.<region>.amazonaws.com/<ecr_name>:latest
+        fi
+      - echo " End Post Build "
+artifacts:
+  files:
+    - '**/*'

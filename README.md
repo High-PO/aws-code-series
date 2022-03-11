@@ -1,2 +1,7 @@
 # aws-code-series
-aws codebuild, codedeploy files
+upload my aws codebuild and codedeploy files
+
+# list
+
+- [x] flask-compile and ecr push setup
+
