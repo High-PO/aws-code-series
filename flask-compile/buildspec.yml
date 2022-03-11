@@ -8,7 +8,7 @@ phases:
     commands:
       - |
         if [ -f dockerfile ] || [ -f Dockerfile ]; then
-          aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin <accessid>.dkr.ecr.<region>.amazonaws.com
+          aws ecr get-login-password --region <aws_region> | docker login --username AWS --password-stdin <access_id>.dkr.ecr.<aws_region>.amazonaws.com
         fi
       - echo " End Pre Build "
   build:
@@ -16,7 +16,7 @@ phases:
       - |
         if [ -f dockerfile ] || [ -f Dockerfile ]; then
           docker build -t <ecr_name> .
-          docker tag <ecr_name>:latest <accessid>.dkr.ecr.<region>.amazonaws.com/<ecr_name>:latest
+          docker tag <ecr_name>:latest <access_id>.dkr.ecr.<aws_region>.amazonaws.com/<ecr_name>:latest
         fi
       - python -m py_compile app.py
       - echo " End build "
@@ -24,7 +24,7 @@ phases:
     commands:
       - |
         if [ -f dockerfile] || [ -f Dockerfile ]; then
-          docker push <accessid>.dkr.ecr.<region>.amazonaws.com/<ecr_name>:latest
+          docker push <access_id>.dkr.ecr.<aws_region>.amazonaws.com/<ecr_name>:latest
         fi
       - echo " End Post Build "
 artifacts:
