@@ -4,9 +4,9 @@
 # Edit Part
 
 ## buildspec.yml
-- <region> => Your AWS ECR Repository Region
-- <accessid> => Your AWS Acount id 
-- <ecr_name> => Your ECR Repository Name
+- "<region>" => Your AWS ECR Repository Region
+- "<accessid>" => Your AWS Acount id 
+- "<ecr_name>" => Your ECR Repository Name
 
 ## appspec.yml
 
